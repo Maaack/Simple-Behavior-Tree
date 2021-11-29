@@ -1,0 +1,129 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://addons/simple_behavior_tree/nodes/sbt_selector.gd" type="Script" id=1]
+[ext_resource path="res://addons/simple_behavior_tree/nodes/sbt_sequence.gd" type="Script" id=2]
+[ext_resource path="res://addons/simple_behavior_tree/nodes/sbt_root.gd" type="Script" id=3]
+[ext_resource path="res://addons/simple_behavior_tree/nodes/sbt_log.gd" type="Script" id=4]
+[ext_resource path="res://addons/simple_behavior_tree/nodes/sbt_condition.gd" type="Script" id=5]
+[ext_resource path="res://addons/simple_behavior_tree/nodes/sbt_action.gd" type="Script" id=6]
+[ext_resource path="res://addons/simple_behavior_tree/nodes/sbt_wait.gd" type="Script" id=7]
+
+[node name="TreeRoot" type="Node"]
+script = ExtResource( 3 )
+
+[node name="Selector" type="Node" parent="."]
+script = ExtResource( 1 )
+
+[node name="Sequence" type="Node" parent="Selector"]
+script = ExtResource( 2 )
+
+[node name="IsHungry" type="Node" parent="Selector/Sequence"]
+script = ExtResource( 5 )
+method_name = "is_hungry"
+
+[node name="TreeSequence2" type="Node" parent="Selector/Sequence"]
+script = ExtResource( 2 )
+
+[node name="HasNoFood" type="Node" parent="Selector/Sequence/TreeSequence2"]
+script = ExtResource( 5 )
+__meta__ = {
+"_editor_description_": ""
+}
+method_name = "has_food"
+inverse = true
+
+[node name="TreeLog" type="Node" parent="Selector/Sequence/TreeSequence2"]
+script = ExtResource( 4 )
+log_message = "Cooked Food"
+
+[node name="CookFood" type="Node" parent="Selector/Sequence/TreeSequence2"]
+script = ExtResource( 6 )
+method_name = "add_food"
+
+[node name="TreeSequence" type="Node" parent="Selector/Sequence"]
+script = ExtResource( 2 )
+
+[node name="HasFood" type="Node" parent="Selector/Sequence/TreeSequence"]
+script = ExtResource( 5 )
+__meta__ = {
+"_editor_description_": ""
+}
+method_name = "has_food"
+
+[node name="TreeLog" type="Node" parent="Selector/Sequence/TreeSequence"]
+script = ExtResource( 4 )
+log_message = "Ate Food"
+
+[node name="EatFood" type="Node" parent="Selector/Sequence/TreeSequence"]
+script = ExtResource( 6 )
+method_name = "eat_food"
+
+[node name="Sequence2" type="Node" parent="Selector"]
+script = ExtResource( 2 )
+
+[node name="IsThirsty" type="Node" parent="Selector/Sequence2"]
+script = ExtResource( 5 )
+method_name = "is_thirsty"
+
+[node name="TreeSequence2" type="Node" parent="Selector/Sequence2"]
+script = ExtResource( 2 )
+
+[node name="HasNoWater" type="Node" parent="Selector/Sequence2/TreeSequence2"]
+script = ExtResource( 5 )
+__meta__ = {
+"_editor_description_": ""
+}
+method_name = "has_water"
+inverse = true
+
+[node name="TreeLog" type="Node" parent="Selector/Sequence2/TreeSequence2"]
+script = ExtResource( 4 )
+log_message = "Poured Water"
+
+[node name="GetWater" type="Node" parent="Selector/Sequence2/TreeSequence2"]
+script = ExtResource( 6 )
+method_name = "add_water"
+
+[node name="TreeSequence" type="Node" parent="Selector/Sequence2"]
+script = ExtResource( 2 )
+
+[node name="HasWater" type="Node" parent="Selector/Sequence2/TreeSequence"]
+script = ExtResource( 5 )
+__meta__ = {
+"_editor_description_": ""
+}
+method_name = "has_water"
+
+[node name="TreeLog" type="Node" parent="Selector/Sequence2/TreeSequence"]
+script = ExtResource( 4 )
+log_message = "Drank Water"
+
+[node name="DrinkWater" type="Node" parent="Selector/Sequence2/TreeSequence"]
+script = ExtResource( 6 )
+method_name = "drink_water"
+
+[node name="TreeSequence" type="Node" parent="Selector"]
+script = ExtResource( 2 )
+
+[node name="IsExhausted" type="Node" parent="Selector/TreeSequence"]
+script = ExtResource( 5 )
+method_name = "is_exhausted"
+
+[node name="TreeAction" type="Node" parent="Selector/TreeSequence"]
+script = ExtResource( 6 )
+method_name = "sleep"
+
+[node name="TreeLog" type="Node" parent="Selector/TreeSequence"]
+script = ExtResource( 4 )
+log_message = "slept"
+
+[node name="TreeSequence2" type="Node" parent="Selector"]
+script = ExtResource( 2 )
+
+[node name="TreeWait" type="Node" parent="Selector/TreeSequence2"]
+script = ExtResource( 7 )
+wait_time = 1.0
+
+[node name="TreeLog" type="Node" parent="Selector/TreeSequence2"]
+script = ExtResource( 4 )
+log_message = "idled for a bit"

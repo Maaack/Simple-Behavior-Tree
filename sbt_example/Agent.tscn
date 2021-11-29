@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://sbt_example/TreeRoot.tscn" type="PackedScene" id=1]
+[ext_resource path="res://sbt_example/Agent.gd" type="Script" id=2]
+
+[node name="Agent" type="Node"]
+script = ExtResource( 2 )
+
+[node name="Label" type="Label" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+text = "Check the output..."
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TreeRoot" parent="." instance=ExtResource( 1 )]
